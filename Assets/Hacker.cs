@@ -6,16 +6,21 @@ public class Hacker : MonoBehaviour
 {
     // Game State
     int level;
+    string password;
     //Screen enumeration
     enum Screen { MainMenu, Password, Win };
-    Screen currentScreen = Screen.MainMenu;
+    Screen currentScreen;
+
+    #region Start
     void Start()
     {
         ShowMainMenu();
     }
+    #endregion
     #region ShowMainMenu
         void ShowMainMenu()
         {
+            currentScreen = Screen.MainMenu;
             Terminal.ClearScreen();
             Terminal.WriteLine("Hello. My name is Joshua.");
             Terminal.WriteLine("Want to play a game?");
@@ -26,27 +31,44 @@ public class Hacker : MonoBehaviour
         }
     #endregion
     #region UserInput
+    //handle input
         void OnUserInput(string input)
         {
-            if( input == "menu")
+            if( input == "menu") // go back to main menu
             {
                 ShowMainMenu();
             }
-            else if( input == "1" )
+            else if( currentScreen == Screen.MainMenu )
+            {
+                RunMainMenu(input);
+            }
+            else if( currentScreen == Screen.Password )
+            {
+                CheckPassword(input);
+            }
+        }
+    #endregion
+    #region RunMainMenu
+        void RunMainMenu(string input)
+        {
+            if( input == "1" )
             {
                 level = 1;
-                StartGame();   
+                password = "password";
+                StartGame();
             }
-            else if( input == "2" )
+            else if( input == "2"  )
             {
                 level = 2;
-                StartGame();
+                password = "password2";
+                StartGame();            
             }
             else if( input == "3"  )
             {
                 level = 3;
+                password = "password3";
                 StartGame();            
-                }
+            }
             else if( input == "007" )
             {
                 Terminal.WriteLine("Welcome back Mr. Bond.");   
@@ -55,19 +77,33 @@ public class Hacker : MonoBehaviour
             {
                 Terminal.WriteLine("Please enter valid selection.");
             }
+        }
+          
     #endregion
     #region StartGame
         void StartGame()
         {
-            Screen currentScreen = Screen.Password
+            currentScreen = Screen.Password;
             Terminal.WriteLine("You selected level " + level);
-            Terminal.WriteLine("Password:")
+            Terminal.WriteLine("Password:");
         } 
     #endregion
-    // Update is called once per frame
+    #region CheckPassword
+        void CheckPassword(string input)
+        {
+            if ( input == password )
+            {
+                Terminal.WriteLine("Access Granted");
+            }
+            else
+            {
+                Terminal.WriteLine("Wrong Password");
+            }
+        }
+    #endregion
     void Update()
     {
-        
+
     }
     }
-}
+
