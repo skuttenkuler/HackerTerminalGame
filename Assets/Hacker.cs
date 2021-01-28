@@ -6,6 +6,9 @@ public class Hacker : MonoBehaviour
 {
     // Game State
     int level;
+    //Screen enumeration
+    enum Screen { MainMenu, Password, Win };
+    Screen currentScreen = Screen.MainMenu;
     void Start()
     {
         ShowMainMenu();
@@ -56,7 +59,9 @@ public class Hacker : MonoBehaviour
     #region StartGame
         void StartGame()
         {
+            Screen currentScreen = Screen.Password
             Terminal.WriteLine("You selected level " + level);
+            Terminal.WriteLine("Password:")
         } 
     #endregion
     // Update is called once per frame
