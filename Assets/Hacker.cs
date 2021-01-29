@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    #region GameConfigAndState
+    //Game config
+    string[] level1Passwords = {"books", "checkout", "librarian"};
+    string[] level2Passwords = {"prisoner", "handcuffs", "officer","donut","arrest"};
+    string[] level3Passwords = {"spacewalk", "darkmatter", "gravity","propulsion","spacewalk"};
     // Game State
     int level;
     string password;
     //Screen enumeration
     enum Screen { MainMenu, Password, Win };
     Screen currentScreen;
-
+    #endregion
     #region Start
     void Start()
     {
@@ -51,23 +56,11 @@ public class Hacker : MonoBehaviour
     #region RunMainMenu
         void RunMainMenu(string input)
         {
-            if( input == "1" )
+            bool isValidInput = (input == "1" || input == "2" || input == "3");
+            if (isValidInput)
             {
-                level = 1;
-                password = "password";
+                level = int.Parse(input);
                 StartGame();
-            }
-            else if( input == "2"  )
-            {
-                level = 2;
-                password = "password2";
-                StartGame();            
-            }
-            else if( input == "3"  )
-            {
-                level = 3;
-                password = "password3";
-                StartGame();            
             }
             else if( input == "007" )
             {
@@ -84,7 +77,24 @@ public class Hacker : MonoBehaviour
         void StartGame()
         {
             currentScreen = Screen.Password;
-            Terminal.WriteLine("You selected level " + level);
+            Terminal.ClearScreen();
+            switch(level)
+            {
+                case 1:
+                    password = level1Passwords[1];
+                    break;
+                case 2:
+                    password = level2Passwords[1];
+                    break;
+                case 3:
+                    password = level3Passwords[1];
+                    break;
+                default:
+                    Debug.LogError("Invalid number");
+                    break;
+                
+
+            }
             Terminal.WriteLine("Password:");
         } 
     #endregion
