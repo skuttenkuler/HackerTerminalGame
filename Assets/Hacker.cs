@@ -6,9 +6,10 @@ public class Hacker : MonoBehaviour
 {
     #region GameConfigAndState
     //Game config
+    const string menuHint = "User, you may type menu at any time.";
     string[] level1Passwords = {"books", "checkout", "librarian"};
     string[] level2Passwords = {"prisoner", "handcuffs", "officer","donut","arrest"};
-    string[] level3Passwords = {"spacewalk", "darkmatter", "gravity","propulsion","spacewalk"};
+    string[] level3Passwords = {"spacewalk", "darkmatter", "gravity","propulsion","spacestation", "astronaught"};
     // Game State
     int level;
     string password;
@@ -61,7 +62,7 @@ public class Hacker : MonoBehaviour
             if (isValidInput)
             {
                 level = int.Parse(input);
-                StartGame();
+                AskForPassword();
             }
             else if( input == "007" )
             {
@@ -70,15 +71,24 @@ public class Hacker : MonoBehaviour
             else
             {
                 Terminal.WriteLine("Please enter valid selection.");
+                Terminal.WriteLine(menuHint);
             }
         }
           
     #endregion
-    #region StartGame
-        void StartGame()
+    #region AskForPassword
+        void AskForPassword()
         {
             currentScreen = Screen.Password;
             Terminal.ClearScreen();
+            SetRandomPassword();
+            Terminal.WriteLine("Enter Password, hint:" + password.Anagram());
+            Terminal.WriteLine(menuHint);
+        } 
+    #endregion
+    #region SetRandomPassword
+        void SetRandomPassword()
+        {
             switch(level)
             {
                 case 1:
@@ -93,11 +103,8 @@ public class Hacker : MonoBehaviour
                 default:
                     Debug.LogError("Invalid number");
                     break;
-                
-
             }
-            Terminal.WriteLine("Password:");
-        } 
+        }
     #endregion
     #region CheckPassword
         void CheckPassword(string input)
@@ -118,6 +125,7 @@ public class Hacker : MonoBehaviour
             currentScreen = Screen.Win;
             Terminal.ClearScreen();
             ShowLevelReward();
+            Terminal.WriteLine(menuHint);
         }
     #endregion
     #region ShowLevelReward
@@ -136,8 +144,8 @@ public class Hacker : MonoBehaviour
 ||||         |         ||||
 ||/=========\|/=========\||
 `----------~___~---------''
-        ACCESS GRANTED
-        Reward: BOOK
+        ACCESS GRANTED - Reward: 
+                BOOK
                     ");
                     break;
                 case 2:
@@ -151,8 +159,8 @@ public class Hacker : MonoBehaviour
   \   '--'   /
    '--.  .--'
        \/
-        ACCESS GRANTED
-        Reward: BADGE
+        ACCESS GRANTED - Reward: 
+                BADGE
                     ");
                     break;
                 case 3:
@@ -167,9 +175,12 @@ public class Hacker : MonoBehaviour
             .' \:.    / `.
            / .-'':._.'`-. \
            |/    /||\    \|
-        ACCESS GRANTED
-        Reward: SPACESHIP
+        ACCESS GRANTED - Reward: 
+               SPACESHIP
                     ");
+                    break;
+                default:
+                    Debug.LogError("Invalid input");
                     break;
             }
             
