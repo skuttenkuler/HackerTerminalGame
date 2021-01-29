@@ -107,7 +107,3 @@ Giving player hint, setting random password, and then checking password.
   * Sam Kuttenkuler
     - [Github](https://www.github.com/skuttenkuler)
     - [LinkedIn](https://www.linkedin.com/in/skdev91)
-
-# Map - City16
-
-[Unreal Environments](https://www.patreon.com/UnrealEnvironments?alert=2)
