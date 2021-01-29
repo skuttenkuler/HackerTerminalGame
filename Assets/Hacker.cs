@@ -17,6 +17,7 @@ public class Hacker : MonoBehaviour
     Screen currentScreen;
     #endregion
     #region Start
+
     void Start()
     {
         ShowMainMenu();
@@ -81,13 +82,13 @@ public class Hacker : MonoBehaviour
             switch(level)
             {
                 case 1:
-                    password = level1Passwords[1];
+                    password = level1Passwords[Random.Range(0, level1Passwords.Length)];
                     break;
                 case 2:
-                    password = level2Passwords[1];
+                    password = level2Passwords[Random.Range(0, level2Passwords.Length)];
                     break;
                 case 3:
-                    password = level3Passwords[1];
+                    password = level3Passwords[Random.Range(0, level3Passwords.Length)];
                     break;
                 default:
                     Debug.LogError("Invalid number");
@@ -103,7 +104,7 @@ public class Hacker : MonoBehaviour
         {
             if ( input == password )
             {
-                Terminal.WriteLine("Access Granted");
+                DisplayWinScreen();
             }
             else
             {
@@ -111,9 +112,68 @@ public class Hacker : MonoBehaviour
             }
         }
     #endregion
-    void Update()
-    {
+    #region DisplayWinScreen
+        void DisplayWinScreen()
+        {
+            currentScreen = Screen.Win;
+            Terminal.ClearScreen();
+            ShowLevelReward();
+        }
+    #endregion
+    #region ShowLevelReward
+        void ShowLevelReward()
+        {
+            switch (level)
+            {
+                case 1:
+                    Terminal.WriteLine(@"
+    
+    ________   ________
+.-/|        \ /        |\-.
+||||         |         ||||
+||||         |         ||||
+||||         |         ||||
+||||         |         ||||
+||/=========\|/=========\||
+`----------~___~---------''
+        ACCESS GRANTED
+        Reward: BOOK
+                    ");
+                    break;
+                case 2:
+                    Terminal.WriteLine(@"
+    
+  ,   /\   ,
+  / '-'  '-' \
+  |  POLICE  |
+  |   .--.   |
+  |  ( 01 )  |
+  \   '--'   /
+   '--.  .--'
+       \/
+        ACCESS GRANTED
+        Reward: BADGE
+                    ");
+                    break;
+                case 3:
+                    Terminal.WriteLine(@"
 
-    }
+              +   /\
+ +              .'  '.   *
+        *      /======\      +
+
+    +         |:. (_)  |          *
+              ;:.      ;
+            .' \:.    / `.
+           / .-'':._.'`-. \
+           |/    /||\    \|
+        ACCESS GRANTED
+        Reward: SPACESHIP
+                    ");
+                    break;
+            }
+            
+        }
+    #endregion
     }
 
